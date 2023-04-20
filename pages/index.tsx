@@ -1,33 +1,17 @@
-import { useState } from 'react'
+import Description from "<yes>/Components/Description";
+import TextForm from "<yes>/Components/home";
+import Loadingdata from "<yes>/Components/Loadingdata";
 
-export default function UserForm() {
-  const [name, setName] = useState('')
+import { FormEvent, useState } from "react";
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
-
-    const response = await fetch('/api/idea/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name })
-    })
-
-    if (response.ok) {
-      const newUser = await response.json()
-      console.log(newUser)
-    }
-  }
-
+export default function Home() {
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input type="text" value={name} onChange={(event) => setName(event.target.value)} />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-  )
-}
+    <>
+      <TextForm />
+      {/* <Description /> */}
+      {/* < Loadingdata /> */}
 
+      
+    </>
+  );
+}
