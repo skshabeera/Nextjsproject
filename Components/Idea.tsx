@@ -70,10 +70,14 @@ export default function IdeaInput() {
       description
     })
     setLoading(true)
-    await fetch("/api/idea", {
+    const response = await fetch("/api/idea", {
       method: "POST",
       body: data
     })
+    const resData = await response.json()
+    console.log({resData})
+    // store resData into a state
+    // conditionally show the select box if data is there
     setLoading(false)
   }
 
