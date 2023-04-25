@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
-import { TextField, Button, Typography, Box } from '@mui/material';
+import { TextField, Button, Typography, Box, CircularProgress } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -42,7 +42,8 @@ function getStyles(name: string, personName: string, theme: Theme) {
 export default function IdeaInput() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
-  const [description, setDescription] = React.useState("123")
+  const [loading, setLoading] = React.useState(false)
+  const [description, setDescription] = React.useState("")
   const [pricing, setPricing] = React.useState("")
 
   const handleChange = (event: any) => {
@@ -62,15 +63,27 @@ export default function IdeaInput() {
     setPricing(e.target.value)
   }
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const data = JSON.stringify({
+      type: "only-description",
+      description
+    })
+    setLoading(true)
+    await fetch("/api/idea", {
+      method: "POST",
+      body: data
+    })
+    setLoading(false)
+  }
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: "2px", justifyContent: "center", alignItems: "center" }}>
       <Typography variant="h3" gutterBottom>
         Idea Validation App
       </Typography>
-      {/* use a big input box here */}
       <TextField fullWidth label="Idea Description" value={description} onChange={changeHandle} sx={{ m: 1, width: 1000, mt: 3 }} />
-      {/* based on the idea update the values */}
-      <FormControl sx={{ m: 1, width: 1000, mt: 3 }}>
+      {/* <FormControl sx={{ m: 1, width: 1000, mt: 3 }}>
         <Select
           multiple
           displayEmpty
@@ -100,8 +113,9 @@ export default function IdeaInput() {
           ))}
         </Select>
       </FormControl>
-      <TextField label="pricing" variant="outlined" sx={{ m: 1, width: 1000, mt: 3 }} value={pricing} onChange={priceHandle} />
-      <Button variant="contained" sx={{ display: "block" }}>Submit</Button>
+      <TextField label="pricing" variant="outlined" sx={{ m: 1, width: 1000, mt: 3 }} value={pricing} onChange={priceHandle} /> */}
+      <Button variant="contained" sx={{ display: "block" }} onClick={handleSubmit}>{loading ? <CircularProgress size={24} color="error" /> : "SUBMIT"}</Button>
+
     </Box>
   );
 }
