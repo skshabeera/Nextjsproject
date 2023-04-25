@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 
 import { Button } from '@mui/material'
 import laptop from '../public/laptop.jpg'
+import flowerbackground from '../public/flowerbackground.jpg'
 
 
 import { FormEvent, useState } from 'react'
@@ -58,9 +59,9 @@ export default function TextForm() {
           rerum inventore consectetur,neque doloribus, cupiditate <br />
           dignissimos  laborum fugiat deleniti? Eum quasi quidem
         </Typography>
-        <TextField label="Enter text" variant="outlined" onChange={(event) => setName(event.target.value)} />
+        <TextField label="Full width" id="fullWidth" onChange={(event) => setName(event.target.value)} />
         {/* this is my button */}
-        <Button variant="contained" color="primary" onClick={handleSubmit}> {isLoading ? <CircularProgress size={24} color="error" /> : "Submit"}</Button>
+        <Button variant="contained" color="primary" onClick={handleSubmit}> {isLoading ? <CircularProgress size={24} color="error"/>:"SUBMIT"}</Button>
         <Image src={laptop} alt="Example Image" width={500} height={500} />
       </Box>
 
