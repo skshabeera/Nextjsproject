@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { useTheme  } from '@mui/material/styles';
-import { TextField ,Button ,Typography} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+import { TextField, Button, Typography, Box } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -30,7 +30,7 @@ const names = [
   'Kelly Snyder',
 ];
 
-function getStyles(name, personName, theme) {
+function getStyles(name: string, personName: string, theme: Theme) {
   return {
     fontWeight:
       personName.indexOf(name) === -1
@@ -39,13 +39,13 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectPlaceholder() {
+export default function IdeaInput() {
   const theme = useTheme();
   const [personName, setPersonName] = React.useState([]);
-  const [description,setDescription] = React.useState("123")
-  const [pricing,setPricing]= React.useState("")
+  const [description, setDescription] = React.useState("123")
+  const [pricing, setPricing] = React.useState("")
 
-  const handleChange = (event) => {
+  const handleChange = (event: any) => {
     const {
       target: { value },
     } = event;
@@ -54,22 +54,22 @@ export default function MultipleSelectPlaceholder() {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
-  const changeHandle=(e)=>{
-    e.preventDefault()
+  const changeHandle = (e: any) => {
     setDescription(e.target.value)
   }
-  const priceHandle=(e)=>{
+  const priceHandle = (e: any) => {
     e.preventDefault()
     setPricing(e.target.value)
   }
 
   return (
-    <div>
-      <Typography variant="h1" gutterBottom>
-        IdeaValidationApp
+    <Box sx={{ display: "flex", flexDirection: "column", gap: "2px", justifyContent: "center", alignItems: "center" }}>
+      <Typography variant="h3" gutterBottom>
+        Idea Validation App
       </Typography>
-
-      <TextField fullWidth label="idea-Description" id="fullWidth" value={description} onChange={changeHandle} />
+      {/* use a big input box here */}
+      <TextField fullWidth label="Idea Description" value={description} onChange={changeHandle} sx={{ m: 1, width: 1000, mt: 3 }} />
+      {/* based on the idea update the values */}
       <FormControl sx={{ m: 1, width: 1000, mt: 3 }}>
         <Select
           multiple
@@ -94,17 +94,14 @@ export default function MultipleSelectPlaceholder() {
             <MenuItem
               key={name}
               value={name}
-              style={getStyles(name, personName, theme)}
             >
               {name}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
-      <TextField id="outlined-basic margin-none" label="pricing" variant="outlined" sx={{width:'50ch'}} value={pricing} onChange={priceHandle}/>
-
-      <Button  variant="contained">Submit</Button>
-
-    </div>
+      <TextField label="pricing" variant="outlined" sx={{ m: 1, width: 1000, mt: 3 }} value={pricing} onChange={priceHandle} />
+      <Button variant="contained" sx={{ display: "block" }}>Submit</Button>
+    </Box>
   );
 }
