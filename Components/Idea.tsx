@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { TextField, Button, Typography, Box, CircularProgress } from '@mui/material';
 import OutlinedInput from '@mui/material/OutlinedInput';
@@ -18,16 +19,16 @@ const MenuProps = {
 };
 
 const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
+  'target1',
+  'target2',
+  'target3',
+  'target4',
+  'target5',
+  'target6',
+  'target7',
+  'target8',
+  'target9',
+  'target10',
 ];
 
 function getStyles(name: string, personName: string, theme: Theme) {
@@ -45,6 +46,7 @@ export default function IdeaInput() {
   const [loading, setLoading] = React.useState(false)
   const [description, setDescription] = React.useState("")
   const [pricing, setPricing] = React.useState("")
+
 
   const handleChange = (event: any) => {
     const {
@@ -82,11 +84,22 @@ export default function IdeaInput() {
   }
 
   return (
+    
     <Box sx={{ display: "flex", flexDirection: "column", gap: "2px", justifyContent: "center", alignItems: "center" }}>
       <Typography variant="h3" gutterBottom>
         Idea Validation App
       </Typography>
       <TextField fullWidth label="Idea Description" value={description} onChange={changeHandle} sx={{ m: 1, width: 1000, mt: 3 }} />
+      <h6>
+      <ul>
+        {values.map((value) => (
+          <li key={value.id}>{value.value}</li>
+        ))}
+      </ul>
+
+
+      </h6>
+
       {/* <FormControl sx={{ m: 1, width: 1000, mt: 3 }}>
         <Select
           multiple

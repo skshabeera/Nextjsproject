@@ -62,7 +62,7 @@ export default function TextForm() {
         <TextField label="Full width" id="fullWidth" onChange={(event) => setName(event.target.value)} />
         {/* this is my button */}
         <Button variant="contained" color="primary" onClick={handleSubmit}> {isLoading ? <CircularProgress size={24} color="error"/>:"SUBMIT"}</Button>
-        <Image src={laptop} alt="Example Image" width={500} height={500} />
+        <Image src={laptop} alt="Example Image" width={500} height={500} priority />
       </Box>
 
     </>
