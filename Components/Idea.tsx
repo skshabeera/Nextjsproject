@@ -46,6 +46,7 @@ export default function IdeaInput() {
   const [loading, setLoading] = React.useState(false)
   const [description, setDescription] = React.useState("")
   const [pricing, setPricing] = React.useState("")
+  const [restdata,setRestdata]=React.useState(null)
 
 
   const handleChange = (event: any) => {
@@ -78,6 +79,8 @@ export default function IdeaInput() {
     })
     const resData = await response.json()
     console.log({resData})
+    setRestdata(resData)
+    
     // store resData into a state
     // conditionally show the select box if data is there
     setLoading(false)
@@ -88,19 +91,13 @@ export default function IdeaInput() {
     <Box sx={{ display: "flex", flexDirection: "column", gap: "2px", justifyContent: "center", alignItems: "center" }}>
       <Typography variant="h3" gutterBottom>
         Idea Validation App
-      </Typography>
+      </Typography>{console.log({restdata})}
       <TextField fullWidth label="Idea Description" value={description} onChange={changeHandle} sx={{ m: 1, width: 1000, mt: 3 }} />
-      <h6>
-      <ul>
-        {values.map((value) => (
-          <li key={value.id}>{value.value}</li>
-        ))}
-      </ul>
+      {restdata ?(
+      
 
 
-      </h6>
-
-      {/* <FormControl sx={{ m: 1, width: 1000, mt: 3 }}>
+      <FormControl sx={{ m: 1, width: 1000, mt: 3 }}>
         <Select
           multiple
           displayEmpty
@@ -129,8 +126,8 @@ export default function IdeaInput() {
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
-      <TextField label="pricing" variant="outlined" sx={{ m: 1, width: 1000, mt: 3 }} value={pricing} onChange={priceHandle} /> */}
+      </FormControl>):null}
+      {/* <TextField label="pricing" variant="outlined" sx={{ m: 1, width: 1000, mt: 3 }} value={pricing} onChange={priceHandle} /> */}
       <Button variant="contained" sx={{ display: "block" }} onClick={handleSubmit}>{loading ? <CircularProgress size={24} color="error" /> : "SUBMIT"}</Button>
 
     </Box>
