@@ -1,85 +1,57 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { connectToDatabase } from "../../../helpers/connectToDatabase"
-import openai from 'openai';
-
+import { connectToDatabase } from "../../../helpers/connectToDatabase";
+import { Configuration, OpenAIApi } from "openai";
 
 // todo add try catch
 
-const openAIKey = "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"
+const OPENAI_API_KEY = "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"
+
+const configuration = new Configuration({
+    // shabeera setup later
+    apiKey: OPENAI_API_KEY,
+});
+
+const openai = new OpenAIApi(configuration);
+
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-            const { db, client } = await connectToDatabase()
-            await client.connect()
-            console.log(req.body, "bboyd")
-            const body = JSON.parse(req.body)
-            const { description = undefined , type = ""} = body;
-            console.log({type})
-
-            // if (!description) { // data is not sent to us
-            //     throw new Error("Description is not provided")
-            // }
-
-            // validate the idea
-
-            // openai.chat.create(
-            //     model="gpt-3.5-turbo",
-            //     messages=[
-            //           {"role": "system", "content": "You are a helpful assistant."},
-            //           {"role": "user", "content": "Who won the world series in 2020?"},
-            //           {"role": "assistant", "content": "The Los Angeles Dodgers won the World Series in 2020."},
-            //           {"role": "user", "content": "Where was it played?"}
-            //       ]
-            //   )
-            //   res.status(200).json(response.choices[0].text);
-
-            if(type === "only-description") {
-                console.log("getting inside the condition")
-                res.status(200).json({
-                    values: [
-                        {
-                            id: 1, 
-                            value: "target 1"
-                        }, 
-                        {
-                            id: 2, 
-                            value: "target 2"
-                        }, 
-                        {
-                            id: 3, 
-                            value: "target 3"
-                        }
-                    ]
-                })
-
-                return
+            const { idea } = JSON.parse(req.body);
+            
+            if (!idea) {
+                res.status(400).json({ message: 'Idea is required' });
+                return;
             }
-            // using open ai first come up with a company name? 
 
-
-            // example description: standing desk for programmers 
-
-            // name - desker
-
-            // GPT should provide a good marketing descriptions which can be used in the website
-
-            // send the above data back to frontend
-            // todo change the collection name later
-            const collection = db.collection('test-shabeera')
-            const data = await collection.insertOne({
-                text: req.body.name
-            })
-            await client.close()
-            res.status(200).json({
-                name: "test shabeera", 
-                description: "this desciprtion should be shown in the FE , the FE shoudl show step 2. This shoudl be editable   "
-            })
-        } catch (error) {
-            console.error("error", error)
-            res.json({ message : error instanceof Error ? error.message : "Something went wrong" })
+            try {
+                // const prompt = `Generate a name, description, and target audience for a startup idea:\n\nIdea: ${idea}\n\nName: `;
+                // const response = await openai.createCompletion({
+                //     model: "text-davinci-003",
+                //     prompt,
+                //     max_tokens: 150,
+                //     n: 1,
+                //     stop: null,
+                //     temperature: 0.8,
+                // });
+                // console.log(JSON.stringify({ response }))
+                // const output = response.choices[0].text.trim().split('\n');
+                // const name = output[0];
+                // const description = output[1].substring("Description: ".length);
+                // const targetAudience = output[2].substring("Target audience: ".length);
+                // example `Generate a name, description, and target audience for a startup idea:\n\nIdea: ${a toaster that never runs out of battery }\n\nName: `
+                const name = "EverToast"
+                const description= "EverToast is a revolutionary toaster that never runs out of battery, ensuring that you can always enjoy perfectly toasted bread, bagels, and more. With its innovative power source, you'll never have to worry about running out of juice in the middle of making breakfast. EverToast is also equipped with a range of customizable settings, allowing you to get your toast just the way you like it every time."
+                
+                const targetAudience = "Busy professionals, families, and anyone who loves toast but doesn't have time to waste waiting for their toaster to charge or dealing with the frustration of a dead battery. EverToast is perfect for people who value convenience and reliability in their appliances, and who want a high-quality toaster that will last for years to come."
+                res.status(200).json({ name, description, targetAudience });
+                // res.status(200).json({ response });
+            } catch (error) {
+                console.error("error", JSON.stringify(error?.response?.data))
+                res.json({ message: error instanceof Error ? error.message : "Something went wrong" });
+            }
+        } catch (err) {
         }
     }
+
 }
-
-
-// import { connectToDatabase } from '../utils/connectToDatabase'
