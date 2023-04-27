@@ -49,7 +49,7 @@ export default function TextForm() {
 
   return (
     <>
-      <Box display={'flex'} alignItems={'center'} mt={6} >
+      {/* <Box display={'flex'} alignItems={'center'} mt={6} >
         <Typography variant="h1" color="#01579b" flexDirection={'column'} display={"flex"} >
           Super Charge Laptop
         </Typography >
@@ -61,9 +61,9 @@ export default function TextForm() {
         </Typography>
         <TextField label="Full width" id="fullWidth" onChange={(event) => setName(event.target.value)} />
         {/* this is my button */}
-        <Button variant="contained" color="primary" onClick={handleSubmit}> {isLoading ? <CircularProgress size={24} color="error"/>:"SUBMIT"}</Button>
+        {/* <Button variant="contained" color="primary" onClick={handleSubmit}> {isLoading ? <CircularProgress size={24} color="error"/>:"SUBMIT"}</Button>
         <Image src={laptop} alt="Example Image" width={500} height={500} priority />
-      </Box>
+      </Box> */} 
 
     </>
   );

@@ -1,50 +1,10 @@
 import * as React from 'react';
-import { useEffect } from 'react';
-import { useTheme } from '@mui/material/styles';
 import { TextField, Button, Typography, Box, CircularProgress } from '@mui/material';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
-const ITEM_HEIGHT = 68;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 150,
-    },
-  },
-};
-
-const names = [
-  'target1',
-  'target2',
-  'target3',
-  'target4',
-  'target5',
-  'target6',
-  'target7',
-  'target8',
-  'target9',
-  'target10',
-];
-
-function getStyles(name: string, personName: string, theme: Theme) {
-  return {
-    fontWeight:
-      personName.indexOf(name) === -1
-        ? theme.typography.fontWeightRegular
-        : theme.typography.fontWeightMedium,
-  };
-}
 
 export default function IdeaInput() {
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState([]);
   const [loading, setLoading] = React.useState(false)
   const [description, setDescription] = React.useState("")
+<<<<<<< HEAD
   const [pricing, setPricing] = React.useState("")
   const [restdata,setRestdata]=React.useState(null)
 
@@ -58,15 +18,15 @@ export default function IdeaInput() {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
+=======
+  const [responseData, setResponseData] = React.useState<null | { name: string, description: string, target: any[] }>(null)
+>>>>>>> 8a6f19792d91698535c98a4902024c0e76b0b346
   const changeHandle = (e: any) => {
     setDescription(e.target.value)
   }
-  const priceHandle = (e: any) => {
-    e.preventDefault()
-    setPricing(e.target.value)
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
+<<<<<<< HEAD
     e.preventDefault()
     const data = JSON.stringify({
       type: "only-description",
@@ -84,13 +44,35 @@ export default function IdeaInput() {
     // store resData into a state
     // conditionally show the select box if data is there
     setLoading(false)
+=======
+    try {
+      e.preventDefault()
+      const data = JSON.stringify({
+        idea: description
+      })
+      setLoading(true)
+      const response = await fetch("/api/idea", {
+        method: "POST",
+        body: data
+      })
+      const resData = await response.json()
+      console.log({ resData })
+      setResponseData(resData)
+      // store resData into a state
+      // conditionally show the select box if data is there
+      setLoading(false)
+    } catch (error) {
+      // todo error shabeera handle
+    }
+>>>>>>> 8a6f19792d91698535c98a4902024c0e76b0b346
   }
 
   return (
-    
+
     <Box sx={{ display: "flex", flexDirection: "column", gap: "2px", justifyContent: "center", alignItems: "center" }}>
       <Typography variant="h3" gutterBottom>
         Idea Validation App
+<<<<<<< HEAD
       </Typography>{console.log({restdata})}
       <TextField fullWidth label="Idea Description" value={description} onChange={changeHandle} sx={{ m: 1, width: 1000, mt: 3 }} />
       {restdata ?(
@@ -98,6 +80,16 @@ export default function IdeaInput() {
 
 
       <FormControl sx={{ m: 1, width: 1000, mt: 3 }}>
+=======
+      </Typography>
+      {!responseData ? <TextField fullWidth label="Idea Description" value={description} onChange={changeHandle} sx={{ m: 1, width: 1000, mt: 3 }} /> : <></>}
+      {responseData ? <>
+        <TextField label="Name" variant="outlined" sx={{ m: 1, width: 1000, mt: 3 }} value={responseData.name} />
+        <TextField label="website description" variant="outlined" sx={{ m: 1, width: 1000, mt: 3 }} value={responseData.description} />
+      </> : <></>}
+
+      {/* <FormControl sx={{ m: 1, width: 1000, mt: 3 }}>
+>>>>>>> 8a6f19792d91698535c98a4902024c0e76b0b346
         <Select
           multiple
           displayEmpty
