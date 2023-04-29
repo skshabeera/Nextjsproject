@@ -14,11 +14,17 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 
+type AboutUsItem = {
+    imageUrl: string;
+    title: string;
+    description: string;
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
             const { idea } = JSON.parse(req.body);
-            
+
             if (!idea) {
                 res.status(400).json({ message: 'Idea is required' });
                 return;
@@ -41,10 +47,32 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 // const targetAudience = output[2].substring("Target audience: ".length);
                 // example `Generate a name, description, and target audience for a startup idea:\n\nIdea: ${a toaster that never runs out of battery }\n\nName: `
                 const name = "EverToast"
-                const description= "EverToast is a revolutionary toaster that never runs out of battery, ensuring that you can always enjoy perfectly toasted bread, bagels, and more. With its innovative power source, you'll never have to worry about running out of juice in the middle of making breakfast. EverToast is also equipped with a range of customizable settings, allowing you to get your toast just the way you like it every time."
-                
-                const targetAudience= ["Tech Enthusias" ,"Creative Professionals","Fitness Enthusiasts","Small Business Owners","Students and Educators","Travel and Adventure Seekers"]
-                res.status(200).json({ name, description, targetAudience });
+                const description = "EverToast is a revolutionary toaster that never runs out of battery, ensuring that you can always enjoy perfectly toasted bread, bagels, and more. With its innovative power source, you'll never have to worry about running out of juice in the middle of making breakfast. EverToast is also equipped with a range of customizable settings, allowing you to get your toast just the way you like it every time."
+
+                const targetAudience = ["Tech Enthusias", "Creative Professionals", "Fitness Enthusiasts", "Small Business Owners", "Students and Educators", "Travel and Adventure Seekers"]
+
+                const aboutUsItems: AboutUsItem[] = [
+                    {
+                        title: "about us 1",
+                        description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
+                        imageUrl: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+                    },
+                    {
+                        title: "about us 1",
+                        description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
+                        imageUrl: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+                    },
+                    {
+                        title: "about us 1",
+                        description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
+                        imageUrl: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+                    }, {
+                        title: "about us 1",
+                        description: "Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.",
+                        imageUrl: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1471&q=80"
+                    }
+                ]
+                res.status(200).json({ name, description, targetAudience, aboutUsItems });
                 // res.status(200).json({ response });
             } catch (error) {
                 console.error("error", JSON.stringify(error?.response?.data))
