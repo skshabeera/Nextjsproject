@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 const name = "EverToast"
                 const description= "EverToast is a revolutionary toaster that never runs out of battery, ensuring that you can always enjoy perfectly toasted bread, bagels, and more. With its innovative power source, you'll never have to worry about running out of juice in the middle of making breakfast. EverToast is also equipped with a range of customizable settings, allowing you to get your toast just the way you like it every time."
                 
-                const targetAudience = "Busy professionals, families, and anyone who loves toast but doesn't have time to waste waiting for their toaster to charge or dealing with the frustration of a dead battery. EverToast is perfect for people who value convenience and reliability in their appliances, and who want a high-quality toaster that will last for years to come."
+                const targetAudience= ["Tech Enthusias" ,"Creative Professionals","Fitness Enthusiasts","Small Business Owners","Students and Educators","Travel and Adventure Seekers"]
                 res.status(200).json({ name, description, targetAudience });
                 // res.status(200).json({ response });
             } catch (error) {
