@@ -7,10 +7,10 @@ import Image from "next/image";
 type Props = {
   initialHeading: string;
   initialText: string;
-  imageUrl: string;
+  image: string;
 };
 
-const HeroSection: React.FC<Props> = ({ initialText, imageUrl, initialHeading }) => {
+const HeroSection: React.FC<Props> = ({ initialText, image, initialHeading }) => {
   const [heading, setHeading] = useState(initialHeading);
   const [text, setText] = useState(initialText);
 
@@ -72,7 +72,7 @@ const HeroSection: React.FC<Props> = ({ initialText, imageUrl, initialHeading })
             order: { xs: 1, md: 2 },
           }}
         >
-          <Image src={imageUrl} alt="Hero image" width={500} height={300} />
+          <Image src={image} alt="Hero image" width={500} height={300} />
         </Box>
       </Box>
     </Container>

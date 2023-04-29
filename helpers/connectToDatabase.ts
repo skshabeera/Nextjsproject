@@ -1,17 +1,19 @@
 import { MongoClient } from 'mongodb'
+import mongoose from 'mongoose';
 
 const uri = "mongodb+srv://shabeera:Shabeera@cluster0.bo2j2dk.mongodb.net/?retryWrites=true&w=majority"
 
-export async function connectToDatabase() {
+async function connectToDatabase() {
   try {
-    const client = await MongoClient.connect(uri)
-    const db = client.db()
-    return {
-      client,
-      db,
+    if (mongoose.connection.readyState >= 1) {
+      return;
     }
+
+    return await mongoose.connect(uri);
   } catch (error) {
-    console.error({ connectToDatabase: error })
-    throw new Error(error)
+    console.error('Error connecting to database:', error);
+    throw new Error('Failed to connect to the database');
   }
 }
+
+export { connectToDatabase };

@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 export type AboutUsItem = {
-    imageUrl: string;
+    image: string;
     title: string;
     description: string;
 };
@@ -44,7 +44,7 @@ const AboutUs: React.FC<Props> = ({ items }) => {
                                 <CardMedia
                                     component="img"
                                     height="140"
-                                    image={item.imageUrl}
+                                    image={item.image}
                                     alt={item.title}
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
