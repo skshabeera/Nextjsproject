@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -18,13 +18,27 @@ type Props = {
 };
 
 const AboutUs: React.FC<Props> = ({ items }) => {
+    const [editableItems, setEditableItems] = useState(items);
+
+    const handleTextChange = (
+        event: React.FocusEvent<HTMLHeadingElement | HTMLParagraphElement>,
+        index: number,
+        key: 'title' | 'description'
+    ) => {
+        const newItems = [...editableItems];
+        newItems[index][key] = event.target.innerText;
+        setEditableItems(newItems);
+    };
+
     return (
         <Container maxWidth="lg">
             <Box sx={{ py: 4 }}>
-                <Typography variant='h4' textAlign={"center"}>About us</Typography>
+                <Typography variant="h4" textAlign={"center"}>
+                    About us
+                </Typography>
 
                 <Grid container spacing={4}>
-                    {items.map((item, index) => (
+                    {editableItems.map((item, index) => (
                         <Grid item key={index} xs={12} sm={6} md={3}>
                             <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                                 <CardMedia
@@ -34,10 +48,25 @@ const AboutUs: React.FC<Props> = ({ items }) => {
                                     alt={item.title}
                                 />
                                 <CardContent sx={{ flexGrow: 1 }}>
-                                    <Typography gutterBottom variant="h5" component="div" align="center">
+                                    <Typography
+                                        gutterBottom
+                                        variant="h5"
+                                        component="div"
+                                        align="center"
+                                        contentEditable={true}
+                                        onBlur={(e) => handleTextChange(e, index, 'title')}
+                                        suppressContentEditableWarning={true}
+                                    >
                                         {item.title}
                                     </Typography>
-                                    <Typography align="center">{item.description}</Typography>
+                                    <Typography
+                                        align="center"
+                                        contentEditable={true}
+                                        onBlur={(e) => handleTextChange(e, index, 'description')}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {item.description}
+                                    </Typography>
                                 </CardContent>
                             </Card>
                         </Grid>
